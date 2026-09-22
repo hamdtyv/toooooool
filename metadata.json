@@ -1,0 +1,8 @@
+{
+  "name": "مُثقّف | Muthaqaf AI Studio",
+  "description": "Professional AI-Powered YouTube Intelligence & Content Creation Copilot",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

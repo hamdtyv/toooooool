@@ -1,0 +1,94 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default catch-all security net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 256;
+    }
+
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['id', 'userId', 'toolId', 'toolName', 'action', 'timestamp', 'payload']) &&
+             data.userId == request.auth.uid &&
+             data.id is string && data.id.size() <= 64 &&
+             data.toolId is string && data.toolId.size() <= 64 &&
+             data.toolName is string && data.toolName.size() <= 128 &&
+             data.action is string && data.action.size() <= 128;
+    }
+
+    function isValidUserApiKeys(data) {
+      return data.keys().hasAll(['userId']) &&
+             data.userId == request.auth.uid &&
+             (!data.keys().contains('youtubeApiKey') || (data.youtubeApiKey is string && data.youtubeApiKey.size() <= 256)) &&
+             (!data.keys().contains('geminiApiKey') || (data.geminiApiKey is string && data.geminiApiKey.size() <= 256));
+    }
+
+    function isValidApiUsageLog(data) {
+      return data.keys().hasAll(['id', 'userId', 'apiType', 'endpoint', 'timestamp']) &&
+             data.userId == request.auth.uid &&
+             data.id is string && data.id.size() <= 64 &&
+             data.apiType is string && (data.apiType == 'youtube' || data.apiType == 'gemini') &&
+             data.endpoint is string && data.endpoint.size() <= 128;
+    }
+
+    function isValidLinkedChannel(data) {
+      return data.keys().hasAll(['id', 'userId', 'url', 'title']) &&
+             data.userId == request.auth.uid &&
+             data.id is string && data.id.size() <= 128 &&
+             data.url is string && data.url.size() <= 512 &&
+             data.title is string && data.title.size() <= 256;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow write: if isSignedIn() && request.auth.uid == userId && isValidUserProfile(incoming());
+    }
+
+    match /activity_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidActivityLog(incoming());
+      allow update, delete: if false;
+    }
+
+    match /user_api_keys/{userId} {
+      allow read, write: if isSignedIn() && request.auth.uid == userId && (request.method != 'create' && request.method != 'update' || isValidUserApiKeys(incoming()));
+    }
+
+    match /api_usage_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidApiUsageLog(incoming());
+      allow update, delete: if false;
+    }
+
+    match /linked_channels/{channelId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidLinkedChannel(incoming());
+      allow update: if isSignedIn() && resource.data.userId == request.auth.uid && incoming().userId == request.auth.uid && isValidLinkedChannel(incoming());
+      allow delete: if isSignedIn() && resource.data.userId == request.auth.uid;
+    }
+  }
+}

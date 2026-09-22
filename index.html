@@ -1,0 +1,284 @@
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>مُثقّف | Muthaqaf AI Studio Copilot</title>
+    <meta name="description" content="Professional AI-Powered YouTube Intelligence & Content Creation Copilot" />
+    <meta property="og:title" content="مُثقّف | Muthaqaf AI Studio Copilot" />
+    <meta property="og:description" content="Professional AI-Powered YouTube Intelligence & Content Creation Copilot" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Technical & Aesthetic Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Outfit:wght@300;400;600;800&family=Alexandria:wght@400;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --color-brand: #00ff9d; /* Electric Botanical Mint */
+        --color-brand-glow: rgba(0, 255, 157, 0.3);
+        --color-dark: #050a09; /* Deep Forest Ebony */
+        --color-leaf: #064e3b; /* Deep Emerald */
+        --glass-bg: rgba(8, 15, 12, 0.6);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+      
+      /* Optimized Fluid Scroll */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: var(--color-dark); }
+      ::-webkit-scrollbar-thumb { 
+        background: linear-gradient(to bottom, transparent, var(--color-brand), transparent);
+        border-radius: 100px;
+      }
+
+      /* Liquid Botanical Glass - Optimized for maximum Performance */
+      .glass-panel {
+        background: rgba(10, 12, 11, 0.7); /* More opaque background to reduce blur dependency */
+        backdrop-filter: blur(8px) saturate(130%);
+        -webkit-backdrop-filter: blur(8px) saturate(130%);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 8px 24px -10px rgba(0, 0, 0, 0.4);
+        border-radius: 2rem;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+        will-change: transform;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+      }
+      
+      .glass-panel:hover {
+        border-color: rgba(0, 255, 157, 0.2);
+        transform: translateY(-2px);
+      }
+
+      /* Reduce paint operations for non-visible sections */
+      section, div.bento-zone {
+        content-visibility: auto;
+        contain-intrinsic-size: 500px;
+        contain: layout style;
+      }
+
+      /* High-Stability Background - Depth & Luminescence */
+      .anim-fluid { 
+        animation: fluid 30s ease-in-out infinite;
+        background: radial-gradient(circle at center, var(--color-leaf) 0%, transparent 80%);
+        pointer-events: none;
+        will-change: transform;
+      }
+      @keyframes fluid {
+        0%, 100% { transform: scale(1) translate(0, 0) rotate(0deg); }
+        33% { transform: scale(1.1) translate(1%, 2%) rotate(1deg); }
+        66% { transform: scale(0.9) translate(-1%, 1%) rotate(-1deg); }
+      }
+
+      /* Typography Hierarchy for No-Overlap */
+      .font-space { font-family: 'Space Grotesk', sans-serif; }
+      .font-outfit { font-family: 'Outfit', sans-serif; }
+      .font-alex { font-family: 'Alexandria', sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', monospace; }
+      
+      html { 
+        scroll-behavior: smooth;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
+
+      body {
+        font-family: 'Outfit', sans-serif;
+        background-color: var(--color-dark);
+        color: #e2e8f0;
+        margin: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+        user-select: none;
+        line-height: 1.6;
+        isolation: isolate; /* Create separate stacking context to prevent overlaps across sections */
+      }
+
+      /* Global Text Fixes */
+      h1, h2, h3, h4, h5, h6 { 
+        line-height: 1.4;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        text-wrap: pretty;
+      }
+      p { 
+        line-height: 1.6; 
+        color: #94a3b8;
+        margin-bottom: 1rem;
+      }
+
+      .brand-shimmer {
+        background: linear-gradient(135deg, #ffffff 0%, #00ff9d 50%, #ffffff 100%);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 5s linear infinite;
+        display: inline-block;
+        padding: 2px 0.15em 2px 0;
+      }
+
+      @keyframes shimmer {
+        to { background-position: 200% center; }
+      }
+
+      .animate-entrance {
+        animation: entrance 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes entrance {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
+
+      /* Improved Text Container Protection */
+      .text-balance { text-wrap: balance; }
+      
+      h1 { line-height: 1.1 !important; }
+
+      /* Dynamic Brand Classic CSS Overrides */
+      body.classic-theme .text-emerald-400 {
+        color: #3b82f6 !important;
+      }
+      body.classic-theme .text-emerald-300 {
+        color: #60a5fa !important;
+      }
+      body.classic-theme .text-emerald-500 {
+        color: #2563eb !important;
+      }
+      body.classic-theme .bg-emerald-500 {
+        background-color: #3b82f6 !important;
+      }
+      body.classic-theme .bg-emerald-400 {
+        background-color: #60a5fa !important;
+      }
+      body.classic-theme .bg-emerald-500\/10 {
+        background-color: rgba(59, 130, 246, 0.1) !important;
+      }
+      body.classic-theme .bg-emerald-500\/20,
+      body.classic-theme .bg-emerald-500\/25,
+      body.classic-theme .bg-emerald-500\/30 {
+        background-color: rgba(59, 130, 246, 0.2) !important;
+      }
+      body.classic-theme .bg-emerald-500\/5 {
+        background-color: rgba(59, 130, 246, 0.05) !important;
+      }
+      body.classic-theme .border-emerald-500\/30,
+      body.classic-theme .border-emerald-500\/20 {
+        border-color: rgba(59, 130, 246, 0.2) !important;
+      }
+      body.classic-theme .hover\:border-emerald-500\/30:hover {
+        border-color: rgba(59, 130, 246, 0.4) !important;
+      }
+      body.classic-theme .shadow-emerald-500\/10 {
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -2px rgba(59, 130, 246, 0.1) !important;
+      }
+      body.classic-theme .hover\:text-slate-300:hover {
+        color: #cbd5e1 !important;
+      }
+      body.classic-theme .hover\:text-emerald-300:hover {
+        color: #60a5fa !important;
+      }
+      body.classic-theme .group-hover\:text-emerald-300:hover,
+      body.classic-theme .group:hover .group-hover\:text-emerald-300 {
+        color: #60a5fa !important;
+      }
+      body.classic-theme .group-hover\:bg-emerald-500:hover,
+      body.classic-theme .group:hover .group-hover\:bg-emerald-500 {
+        background-color: #3b82f6 !important;
+      }
+      body.classic-theme .brand-shimmer {
+        background-image: linear-gradient(to right, #3b82f6 20%, #93c5fd 40%, #e0f2fe 60%, #3b82f6 80%) !important;
+      }
+      body.classic-theme .glass-panel {
+        background: rgba(15, 23, 42, 0.45) !important;
+        border-color: rgba(59, 130, 246, 0.1) !important;
+      }
+      body.classic-theme .bg-radial-gradient {
+        background-image: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%) !important;
+      }
+
+      /* Reading Mode CSS Overrides */
+      body.reading-mode p,
+      body.reading-mode span,
+      body.reading-mode div,
+      body.reading-mode h1,
+      body.reading-mode h2,
+      body.reading-mode h3,
+      body.reading-mode h4,
+      body.reading-mode li,
+      body.reading-mode td,
+      body.reading-mode th {
+        font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif !important;
+        letter-spacing: 0.02em !important;
+      }
+      body.reading-mode p {
+        font-size: 1.15em !important;
+        line-height: 1.85 !important;
+        color: #f8fafc !important; /* High contrast */
+      }
+      body.reading-mode span.text-slate-400,
+      body.reading-mode span.text-slate-500,
+      body.reading-mode div.text-slate-400,
+      body.reading-mode div.text-slate-500,
+      body.reading-mode .text-xs.text-slate-400 {
+        color: #e2e8f0 !important; /* Higher contrast for secondary text */
+        font-size: calc(1em * 1.1) !important;
+      }
+      body.reading-mode h1, 
+      body.reading-mode h2, 
+      body.reading-mode h3, 
+      body.reading-mode h4 {
+        color: #ffffff !important;
+        font-weight: 700 !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.05em !important;
+      }
+      body.reading-mode .glass-panel {
+        background: rgba(5, 7, 6, 0.98) !important;
+        border-color: rgba(255, 255, 255, 0.25) !important;
+      }
+
+      @media print {
+        aside, header, footer, form, button, .print\:hidden, #chat-assistant, .action-bar {
+          display: none !important;
+        }
+        main {
+          margin: 0 !important;
+          padding: 0 !important;
+          width: 100% !important;
+        }
+        body {
+          background: white !important;
+          color: black !important;
+        }
+        .glass-panel, .bg-white\/5, .bg-black\/40, .bg-\[\#0a0c0b\]\/50 {
+          background: #f8fafc !important;
+          color: #0f172a !important;
+          border: 1px solid #cbd5e1 !important;
+        }
+        h1, h2, h3, h4, span, p, div {
+          color: black !important;
+          text-shadow: none !important;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^7.9.6",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "@google/genai": "https://esm.run/@google/genai",
+    "html2canvas": "https://esm.run/html2canvas"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

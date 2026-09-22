@@ -1,0 +1,106 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "User Profile",
+      "description": "User account profiling and synchronization",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ToolActivityLog": {
+      "title": "Tool Activity Log",
+      "description": "Persistent structured audit logs of user usage per analytical tool",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "toolId": { "type": "string" },
+        "toolName": { "type": "string" },
+        "action": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "payload": { "type": "object" },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "userId", "toolId", "toolName", "action", "timestamp", "payload"]
+    },
+    "UserApiKeys": {
+      "title": "User API Keys",
+      "description": "Secure storage of user-provided API credentials for YouTube and Gemini",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "youtubeApiKey": { "type": "string" },
+        "geminiApiKey": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId"]
+    },
+    "ApiUsageLog": {
+      "title": "API Usage Log",
+      "description": "Logs tracking YouTube and Gemini API requests, quota consumed, and token counts.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "apiType": { "type": "string", "enum": ["youtube", "gemini"] },
+        "endpoint": { "type": "string" },
+        "quotaUsed": { "type": "number" },
+        "tokensUsed": { "type": "number" },
+        "status": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "apiType", "endpoint", "timestamp"]
+    },
+    "LinkedYouTubeChannel": {
+      "title": "Linked YouTube Channel",
+      "description": "YouTube channel linked via URL with extracted metadata, videos, and full AI audit report.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "url": { "type": "string" },
+        "handle": { "type": "string" },
+        "title": { "type": "string" },
+        "avatar": { "type": "string" },
+        "banner": { "type": "string" },
+        "subscriberCount": { "type": "string" },
+        "videoCount": { "type": "string" },
+        "description": { "type": "string" },
+        "niche": { "type": "string" },
+        "payload": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "url", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profiles store public/private identifiers and account state."
+    },
+    "/activity_logs/{logId}": {
+      "schema": "ToolActivityLog",
+      "description": "Auditable log entries for tracking actions executed by various tools."
+    },
+    "/user_api_keys/{userId}": {
+      "schema": "UserApiKeys",
+      "description": "User custom API keys for YouTube and Gemini."
+    },
+    "/api_usage_logs/{logId}": {
+      "schema": "ApiUsageLog",
+      "description": "Logs for YouTube quota consumption and Gemini token usage tracking."
+    },
+    "/linked_channels/{channelId}": {
+      "schema": "LinkedYouTubeChannel",
+      "description": "Persisted linked YouTube channels and their AI analysis dossiers."
+    }
+  }
+}

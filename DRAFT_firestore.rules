@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default catch-all security net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['uid', 'email']) &&
+             data.uid == request.auth.uid &&
+             data.email is string && data.email.size() <= 256;
+    }
+
+    function isValidActivityLog(data) {
+      return data.keys().hasAll(['id', 'userId', 'toolId', 'toolName', 'action', 'timestamp', 'payload']) &&
+             data.userId == request.auth.uid &&
+             data.id is string && data.id.size() <= 64 &&
+             data.toolId is string && data.toolId.size() <= 64 &&
+             data.toolName is string && data.toolName.size() <= 128 &&
+             data.action is string && data.action.size() <= 128;
+    }
+
+    match /users/{userId} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+      allow write: if isSignedIn() && request.auth.uid == userId && isValidUserProfile(incoming());
+    }
+
+    match /activity_logs/{logId} {
+      allow get: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.userId == request.auth.uid;
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid && isValidActivityLog(incoming());
+      allow update, delete: if false;
+    }
+  }
+}
